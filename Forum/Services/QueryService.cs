@@ -7,11 +7,18 @@ namespace Forum.Services
 {
     public class QueryService
     {
-        private readonly IEnumerable<User> users;
+        private static IEnumerable<User> users;
+
+        public QueryService()
+        {
+        }
 
         public QueryService(IEnumerable<User> usersData)
         {
-            users = new List<User>(usersData);
+            if (users == null)
+            {
+                users = new List<User>(usersData);
+            }
         }
 
         public (IEnumerable<(Post post, int amount)> postsComments, int userId) GetUserCommentsNumber(int userId)
@@ -179,6 +186,11 @@ namespace Forum.Services
             Console.WriteLine($"Number of comments with 0 likes or <80 symbols: \n{postStructure.unluckyComments}");
         }
 
+        public List<User> GetAllUsers()
+        {
+            return new List<User>(users);
+        }
+        
         public void PrintAllUsers()
         {
             foreach (var user in users)

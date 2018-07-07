@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Forum.Models;
+﻿using Forum.Models;
 using Forum.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -57,6 +53,13 @@ namespace Forum.Controllers
         {
             userService.DeleteById(id);
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            var item = userService.GetById(id);
+            return View(item);
         }
     }
 }

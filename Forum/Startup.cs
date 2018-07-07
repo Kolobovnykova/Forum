@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Forum.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +11,7 @@ namespace Forum
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            RequestService.InitializeData();
         }
 
         public IConfiguration Configuration { get; }

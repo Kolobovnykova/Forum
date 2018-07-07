@@ -8,15 +8,18 @@ using System.Threading.Tasks;
 
 namespace Forum.Services
 {
-    public class RequestService
+    public static class RequestService
     {
         private static readonly HttpClient client =
-            new HttpClient() {BaseAddress = new Uri("https://5b128555d50a5c0014ef1204.mockapi.io/")};
+            new HttpClient {BaseAddress = new Uri("https://5b128555d50a5c0014ef1204.mockapi.io/")};
 
-        public RequestService()
+        private static QueryService queryService;
+
+        public static void InitializeData()
         {
             var dataFromServer = GetDataFromServer().GetAwaiter().GetResult();
             var users = GetCollection(dataFromServer);
+            queryService = new QueryService(users);
         }
 
         private static async
