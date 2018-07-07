@@ -24,10 +24,10 @@ namespace Forum.Controllers
             return View();
         }
 
-        //// Post: /Query/GetUserCommentsNumber
-        //public IActionResult GetUserCommentsNumber(int id)
-        //{
-        //    return View(id);
-        //}
+        // Post: /Query/GetUserCommentsNumber
+        public IActionResult GetUserCommentsNumber(int id)
+        {
+            return View(id);
+        }
     }
 }

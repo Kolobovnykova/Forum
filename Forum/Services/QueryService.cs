@@ -21,30 +21,30 @@ namespace Forum.Services
             }
         }
 
-        public (IEnumerable<(Post post, int amount)> postsComments, int userId) GetUserCommentsNumber(int userId)
+        public IEnumerable<(Post post, int amount)> GetUserCommentsNumber(int userId)
         {
             var postWithComments = users.FirstOrDefault(x => x.Id == userId)?
                 .Posts.Select(x => (x, x.Comments.Count));
 
-            return (postWithComments, userId);
+            return postWithComments;
         }
 
-        public void PrintUserCommentsNumber(IEnumerable<(Post post, int amount)> postsComments, int userId)
-        {
-            Console.Clear();
-            Console.WriteLine("Get number of comments under posts of a particular user.");
-            if (postsComments == null)
-            {
-                Console.WriteLine($"User with id {userId} was not found.");
-                return;
-            }
+        //public void PrintUserCommentsNumber(IEnumerable<(Post post, int amount)> postsComments, int userId)
+        //{
+        //    Console.Clear();
+        //    Console.WriteLine("Get number of comments under posts of a particular user.");
+        //    if (postsComments == null)
+        //    {
+        //        Console.WriteLine($"User with id {userId} was not found.");
+        //        return;
+        //    }
 
-            Console.WriteLine($"User Id: {userId}");
-            foreach (var post in postsComments)
-            {
-                Console.WriteLine($"Post #{post.post.Id} has {post.amount} comment(s)");
-            }
-        }
+        //    Console.WriteLine($"User Id: {userId}");
+        //    foreach (var post in postsComments)
+        //    {
+        //        Console.WriteLine($"Post #{post.post.Id} has {post.amount} comment(s)");
+        //    }
+        //}
 
         public (IEnumerable<Comment> comments, int userId) GetUserCommentsWithLength(int userId)
         {
@@ -210,6 +210,21 @@ namespace Forum.Services
                     Console.WriteLine($"\t{todo}");
                 }
             }
+        }
+
+        public List<Post> GetAllPosts()
+        {
+            return users.SelectMany(x => x.Posts).OrderBy(x => x.Id).ToList();
+        }
+        
+        public List<Comment> GetAllComments()
+        {
+            return users.SelectMany(x => x.Posts).SelectMany(x => x.Comments).OrderBy(x => x.Id).ToList();
+        }
+        
+        public List<Todo> GetAllTodos()
+        {
+            return users.SelectMany(x => x.Todos).OrderBy(x => x.Id).ToList();
         }
     }
 }
