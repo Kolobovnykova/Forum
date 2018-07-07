@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Delete";
-  //  int itemName = Model == null ? 1: Model.Id;
+    int itemId = Model == null ? 0 : Model.Id;
 }
 
 <h2>Delete</h2>
@@ -44,7 +44,7 @@
         </dd>
     </dl>
     
-    @using (Html.BeginForm(new {id = Model.Id}))
+    @using (Html.BeginForm(new {id = itemId }))
     {
         @Html.AntiForgeryToken()
         <div class="form-group">
