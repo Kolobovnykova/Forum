@@ -1,4 +1,5 @@
-﻿using Forum.Services;
+﻿using Forum.Models.ViewModels;
+using Forum.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Forum.Controllers
@@ -11,13 +12,13 @@ namespace Forum.Controllers
         {
             queryService = new QueryService();
         }
-        
+
         // GET: /Query/Index
         public IActionResult Index()
         {
             return View();
         }
-        
+
         // GET: /Query/GetUserCommentsNumber
         public IActionResult GetUserCommentsNumber()
         {
@@ -25,9 +26,18 @@ namespace Forum.Controllers
         }
 
         // Post: /Query/GetUserCommentsNumber
+        [HttpPost]
         public IActionResult GetUserCommentsNumber(int id)
         {
-            return View(id);
+            var viewModel = new PostCommentNumberViewModel();
+            if (ModelState.IsValid)
+            {
+                viewModel.Model = queryService.GetUserCommentsNumber(id);
+
+                return View(viewModel);
+            }
+
+            return View(viewModel);
         }
     }
 }

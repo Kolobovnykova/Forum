@@ -21,10 +21,10 @@ namespace Forum.Services
             }
         }
 
-        public IEnumerable<(Post post, int amount)> GetUserCommentsNumber(int userId)
+        public IEnumerable<Tuple<Post, int>> GetUserCommentsNumber(int userId)
         {
             var postWithComments = users.FirstOrDefault(x => x.Id == userId)?
-                .Posts.Select(x => (x, x.Comments.Count));
+                .Posts.Select(x => Tuple.Create(x, x.Comments.Count));
 
             return postWithComments;
         }
