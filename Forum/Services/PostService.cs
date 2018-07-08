@@ -17,12 +17,12 @@ namespace Forum.Services
                 posts = queryService.GetAllPosts();
             }
         }
-        
+
         public List<Post> GetAll()
         {
             return posts;
         }
-        
+
         public Post GetById(int id)
         {
             return posts.FirstOrDefault(x => x.Id == id);

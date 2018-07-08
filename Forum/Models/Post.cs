@@ -30,6 +30,5 @@ namespace Forum.Models
         {
             Comments = new List<Comment>(comments);
         }
-
     }
 }
