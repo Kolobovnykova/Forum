@@ -29,71 +29,20 @@ namespace Forum.Services
             return postWithComments;
         }
 
-        //public void PrintUserCommentsNumber(IEnumerable<(Post post, int amount)> postsComments, int userId)
-        //{
-        //    Console.Clear();
-        //    Console.WriteLine("Get number of comments under posts of a particular user.");
-        //    if (postsComments == null)
-        //    {
-        //        Console.WriteLine($"User with id {userId} was not found.");
-        //        return;
-        //    }
-
-        //    Console.WriteLine($"User Id: {userId}");
-        //    foreach (var post in postsComments)
-        //    {
-        //        Console.WriteLine($"Post #{post.post.Id} has {post.amount} comment(s)");
-        //    }
-        //}
-
-        public (IEnumerable<Comment> comments, int userId) GetUserCommentsWithLength(int userId)
+        public IEnumerable<Comment> GetUserCommentsWithLength(int userId, int length)
         {
             var commentsWithLength = users.FirstOrDefault(x => x.Id == userId)?
-                .Posts.SelectMany(x => x.Comments.Where(y => y.Body.Length > 50));
+                .Posts.SelectMany(x => x.Comments.Where(y => y.Body.Length > length));
 
-            return (commentsWithLength, userId);
+            return commentsWithLength;
         }
 
-        public void PrintUserCommentsWithLength(IEnumerable<Comment> commentsWithLength, int userId)
-        {
-            Console.Clear();
-            Console.WriteLine("Get number of comments with length more than 50 of a particular user.");
-            if (commentsWithLength == null)
-            {
-                Console.WriteLine($"User with id {userId} was not found.");
-                return;
-            }
-
-            Console.WriteLine($"User Id: {userId}");
-            foreach (var comment in commentsWithLength)
-            {
-                Console.WriteLine(comment);
-            }
-        }
-
-        public (IEnumerable<(int id, string name)> todos, int userId) GetListOfCompleteTodos(int userId)
+        public IEnumerable<Tuple<int, string>> GetListOfCompleteTodos(int userId)
         {
             var listOfTodos = users.FirstOrDefault(x => x.Id == userId)?
-                .Todos.Where(x => x.IsComplete).Select(x => (x.Id, x.Name));
+                .Todos.Where(x => x.IsComplete).Select(x => Tuple.Create(x.Id, x.Name));
 
-            return (listOfTodos, userId);
-        }
-
-        public void PrintListOfCompleteTodos(IEnumerable<(int id, string name)> todos, int userId)
-        {
-            Console.Clear();
-            Console.WriteLine("Get number of complete todos of a particular user.");
-            if (todos == null)
-            {
-                Console.WriteLine($"User with id {userId} was not found or there are no complete todos.");
-                return;
-            }
-
-            Console.WriteLine($"User Id: {userId}");
-            foreach (var todo in todos)
-            {
-                Console.WriteLine($"Todo #{todo.id} with name {todo.name} is complete");
-            }
+            return listOfTodos;
         }
 
         public IEnumerable<User> GetListOfSortedUsers(int numberOfUsers)

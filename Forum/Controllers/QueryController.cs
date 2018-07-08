@@ -39,5 +39,47 @@ namespace Forum.Controllers
 
             return View(viewModel);
         }
+        
+        // GET: /Query/GetUserCommentsWithLength
+        public IActionResult GetUserCommentsWithLength()
+        {
+            return View();
+        }
+
+        // Post: /Query/GetUserCommentsWithLength
+        [HttpPost]
+        public IActionResult GetUserCommentsWithLength(int id, int length)
+        {
+            var viewModel = new UserCommentsViewModel();
+            if (ModelState.IsValid)
+            {
+                viewModel.Comments = queryService.GetUserCommentsWithLength(id, length);
+
+                return View(viewModel);
+            }
+
+            return View(viewModel);
+        }   
+        
+        // GET: /Query/GetListOfCompleteTodos
+        public IActionResult GetListOfCompleteTodos()
+        {
+            return View();
+        }
+
+        // Post: /Query/GetListOfCompleteTodos
+        [HttpPost]
+        public IActionResult GetListOfCompleteTodos(int id)
+        {
+            var viewModel = new ListOfCompleteTodosViewModel();
+            if (ModelState.IsValid)
+            {
+                viewModel.Model = queryService.GetListOfCompleteTodos(id);
+
+                return View(viewModel);
+            }
+
+            return View(viewModel);
+        }
     }
 }
