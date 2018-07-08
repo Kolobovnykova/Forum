@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Forum.Models.User>
+
+@{
+    ViewData["Title"] = "GetListOfSortedUsers";
+}
+
+<h2>Get list of sorted users and their todos</h2>
+
+<div class="panel-group" id="accordion">
+    @foreach (var user in Model)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#@user.Id">
+                        @user.Name</a>
+                </h4>
+            </div>
+            <div id="@user.Id" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <td>Todo Id</td>
+                            <td>Todo Name</td>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach (var todo in user.Todos)
+                        {
+                            <tr>
+                                <td>@todo.Id</td>
+                                <td>@Html.ActionLink(todo.Name, "Details", "Todo", new {id = todo.Id})</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>

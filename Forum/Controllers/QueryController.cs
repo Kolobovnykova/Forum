@@ -1,4 +1,8 @@
-﻿using Forum.Models.ViewModels;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Forum.Models;
+using Forum.Models.ViewModels;
 using Forum.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -80,6 +84,14 @@ namespace Forum.Controllers
             }
 
             return View(viewModel);
+        }
+
+        // GET: /Query/GetListOfSortedUsers
+        public IActionResult GetListOfSortedUsers()
+        {
+            var model = new List<User>();
+            model = queryService.GetListOfSortedUsers().ToList();
+            return View(model);
         }
     }
 }

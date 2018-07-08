@@ -27,15 +27,15 @@
         <table border="2" class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Todo's Id</th>
-                    <th scope="col">Name of todo</th>
+                    <th scope="col">Todo Id</th>
+                    <th scope="col">Todo Name</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.Model)
                 {
                     <tr>
-                        <td>@Html.ActionLink(item.Item1.ToString(), "Details", "Todo", new { id = item.Item1 })</td>
+                        <td>@item.Item1</td>
                         <td>@Html.ActionLink(item.Item2, "Details", "Todo", new { id = item.Item1 })</td>
                     </tr>
                 }
