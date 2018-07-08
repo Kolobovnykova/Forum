@@ -135,5 +135,11 @@ namespace Forum.Controllers
 
             return View(viewModel);
         }
+        
+        // GET: /Query/GetAllData
+        public IActionResult GetAllData()
+        {
+            return View(queryService.GetAllUsers());
+        }
     }
 }

@@ -81,56 +81,21 @@ namespace Forum.Services
             return postStructure;
         }
 
-        //public void PrintPostStructureById(
-        //    (Post post, Comment longestComment, Comment luckyComment, int unluckyComments) postStructure,
-        //    int postId)
-        //{
-        //    Console.Clear();
-        //    Console.WriteLine("Get a structure of a post by id.");
-
-        //    Console.WriteLine($"Post id: \n{postId}");
-        //    Console.WriteLine($"Post: \n{postStructure.post}");
-        //    Console.WriteLine($"Longest comment: \n{postStructure.longestComment}");
-        //    Console.WriteLine($"A comment with most likes: \n{postStructure.luckyComment}");
-        //    Console.WriteLine($"Number of comments with 0 likes or <80 symbols: \n{postStructure.unluckyComments}");
-        //}
-
         public List<User> GetAllUsers()
         {
             return new List<User>(users);
         }
-        
-        //public void PrintAllUsers()
-        //{
-        //    foreach (var user in users)
-        //    {
-        //        Console.WriteLine(user);
-        //        foreach (var post in user.Posts)
-        //        {
-        //            Console.WriteLine($"\t{post}");
-        //            foreach (var comment in post.Comments)
-        //            {
-        //                Console.WriteLine($"\t\t{comment}");
-        //            }
-        //        }
-
-        //        foreach (var todo in user.Todos)
-        //        {
-        //            Console.WriteLine($"\t{todo}");
-        //        }
-        //    }
-        //}
 
         public List<Post> GetAllPosts()
         {
             return users.SelectMany(x => x.Posts).OrderBy(x => x.Id).ToList();
         }
-        
+
         public List<Comment> GetAllComments()
         {
             return users.SelectMany(x => x.Posts).SelectMany(x => x.Comments).OrderBy(x => x.Id).ToList();
         }
-        
+
         public List<Todo> GetAllTodos()
         {
             return users.SelectMany(x => x.Todos).OrderBy(x => x.Id).ToList();
