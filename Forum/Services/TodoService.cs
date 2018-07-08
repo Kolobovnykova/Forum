@@ -17,12 +17,12 @@ namespace Forum.Services
                 todos = queryService.GetAllTodos();
             }
         }
-        
+
         public List<Todo> GetAll()
         {
             return todos;
         }
-        
+
         public Todo GetById(int id)
         {
             return todos.FirstOrDefault(x => x.Id == id);
