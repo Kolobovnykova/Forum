@@ -93,5 +93,47 @@ namespace Forum.Controllers
             model = queryService.GetListOfSortedUsers().ToList();
             return View(model);
         }
+
+        // GET: /Query/GetUserStructureById
+        public IActionResult GetUserStructureById()
+        {
+            return View();
+        }
+
+        // Post: /Query/GetUserStructureById
+        [HttpPost]
+        public IActionResult GetUserStructureById(int id)
+        {
+            var viewModel = new UserStructureViewModel();
+            if (ModelState.IsValid)
+            {
+                viewModel.Model = queryService.GetUserStructureById(id);
+
+                return View(viewModel);
+            }
+
+            return View(viewModel);
+        }
+        
+        // GET: /Query/GetPostStructureById
+        public IActionResult GetPostStructureById()
+        {
+            return View();
+        }
+
+        // Post: /Query/GetPostStructureById
+        [HttpPost]
+        public IActionResult GetPostStructureById(int id)
+        {
+            var viewModel = new PostStructureViewModel();
+            if (ModelState.IsValid)
+            {
+                viewModel.Model = queryService.GetPostStructureById(id);
+
+                return View(viewModel);
+            }
+
+            return View(viewModel);
+        }
     }
 }

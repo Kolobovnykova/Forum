@@ -53,33 +53,11 @@ namespace Forum.Services
             return listOfSortedUsers;
         }
 
-        //public void PrintSortedUsersWithTodos(IEnumerable<User> users)
-        //{
-        //    Console.Clear();
-        //    Console.WriteLine("Get sorted list of users with sorted todos in descending order.");
-        //    if (users == null)
-        //    {
-        //        Console.WriteLine("Users were not found.");
-        //        return;
-        //    }
-
-        //    Console.WriteLine($"User Id: {users}");
-        //    foreach (var user in users)
-        //    {
-        //        Console.WriteLine(user);
-        //        foreach (var todo in user.Todos)
-        //        {
-        //            Console.WriteLine($"\t{todo}");
-        //        }
-        //    }
-        //}
-
-        public (User user, Post lastPost, int? commentsAmount, int incompleteTodosAmount, Post bestPostLength,
-            Post bestPostLikes) GetUserStructureById(int userId)
+        public Tuple<User, Post, int?, int, Post, Post> GetUserStructureById(int userId)
         {
             var userStructure = (from user in users
                     where user.Id == userId
-                    select (user,
+                    select Tuple.Create(user,
                         user.Posts.OrderBy(x => x.Title).LastOrDefault(),
                         user.Posts.OrderBy(x => x.Title).LastOrDefault()?.Comments.Count,
                         user.Todos.Count(x => !x.IsComplete),
@@ -90,30 +68,12 @@ namespace Forum.Services
             return userStructure;
         }
 
-        //public void PrintUserStructureById(
-        //    (User user, Post lastPost, int? commentsAmount, int incompleteTodosAmount, Post bestPostLength,
-        //        Post bestPostLikes) userStructure, int userId)
-        //{
-        //    Console.Clear();
-        //    Console.WriteLine("Get a structure of a user by id.");
-
-        //    Console.WriteLine($"User id: \n{userId}");
-        //    Console.WriteLine($"User: \n{userStructure.user}");
-        //    Console.WriteLine($"Last post: \n{userStructure.lastPost}");
-        //    Console.WriteLine($"Number of comments under last post: \n{userStructure.commentsAmount}");
-        //    Console.WriteLine($"Number of incomplete todos: \n{userStructure.incompleteTodosAmount}");
-        //    Console.WriteLine(
-        //        $"Best post with most comments with length 80+ symbols: \n{userStructure.bestPostLength}");
-        //    Console.WriteLine($"Best post with likes: \n{userStructure.bestPostLikes}");
-        //}
-
-        public (Post post, Comment longestComment, Comment luckyComment, int unluckyComments)
-            GetPostStructureById(int postId)
+        public Tuple<Post, Comment, Comment, int> GetPostStructureById(int postId)
         {
             var postStructure = (from user in users
                 from post in user.Posts
                 where post.Id == postId
-                select (post,
+                select Tuple.Create(post,
                     post.Comments.OrderByDescending(x => x.Body.Length).FirstOrDefault(),
                     post.Comments.OrderByDescending(x => x.Likes).FirstOrDefault(),
                     post.Comments.Count(x => x.Likes == 0 || x.Body.Length < 80))).FirstOrDefault();

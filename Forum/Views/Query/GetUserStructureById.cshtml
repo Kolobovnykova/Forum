@@ -1,0 +1,73 @@
+﻿@model Forum.Models.ViewModels.UserStructureViewModel
+
+@{
+    ViewData["Title"] = "GetUserStructureById";
+}
+
+<h2>GetUserStructureById</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Query" asp-action="GetUserStructureById" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label">Enter user Id for search:</label>
+                <input asp-for="Id" class="form-control"/>
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-default"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @if (Model != null)
+    {
+        <table border="2" class="table table-striped">
+            <tr>
+                <td>Id</td>
+                <td>User</td>
+                <td>Last post</td>
+                <td>Comments under last post</td>
+                <td>Incomplete todos</td>
+                <td>Best post</td>
+                <td>Best post with likes</td>
+            </tr>
+            @if (Model.Model != null)
+            {
+                <tr>
+                    <td>@Model.Model.Item1.Id</td>
+                    <td>@Html.ActionLink(Model.Model.Item1.Name, "Details", "User", new {id = Model.Model.Item1.Id})</td>
+                    @if (Model.Model.Item2 != null)
+                    {
+                        <td>@Html.ActionLink(Model.Model.Item2.Title, "Details", "Post", new {id = Model.Model.Item2.Id})</td>
+                    }
+                    else
+                    {
+                        <td>This user has no posts</td>
+                    }
+                    <td>@Model.Model.Item3</td>
+                    <td>@Model.Model.Item4</td>
+                    @if (Model.Model.Item5 != null)
+                    {
+                        <td>@Html.ActionLink(Model.Model.Item5.Title, "Details", "Post", new {id = Model.Model.Item5.Id})</td>
+                    }
+                    else
+                    {
+                        <td>This user has no posts</td>
+                    }
+                    @if (Model.Model.Item6 != null)
+                    {
+                        <td>@Html.ActionLink(Model.Model.Item6.Title, "Details", "Post", new {id = Model.Model.Item6.Id})</td>
+                    }
+                    else
+                    {
+                        <td>This user has no posts</td>
+                    }
+                </tr>
+            }
+        </table>
+    }
+</div>
