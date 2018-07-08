@@ -3,49 +3,54 @@
 @{
     ViewData["Title"] = "Get user comments with length";
 }
+<div class="container">
 
-<h2>Get user comments with length</h2>
+    <h2>Get user comments with length</h2>
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-controller="Query" asp-action="GetUserCommentsWithLength" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label">Enter user Id for search:</label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Length" class="control-label">Enter minimum length for comments to search:</label>
-                <input asp-for="Length" class="form-control" value="50" />
-                <span asp-validation-for="Length" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-default" />
-            </div>
-        </form>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-controller="Query" asp-action="GetUserCommentsWithLength" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label">Enter user Id for search:</label>
+                    <input asp-for="Id" class="form-control"/>
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Length" class="control-label">Enter minimum length for comments to search:</label>
+                    <input asp-for="Length" class="form-control" value="50"/>
+                    <span asp-validation-for="Length" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Submit" class="btn btn-default"/>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-<div>
-    @if (Model != null)
-    {
-        <table border="2" class="table table-striped">
-            <thead>
+    <div>
+        @if (Model != null)
+        {
+            <table border="2" class="table table-striped">
+                <thead>
                 <tr>
                     <th scope="col">Comment Id</th>
                     <th scope="col">Comment content</th>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Comments)
+                </thead>
+                <tbody>
+                @if (Model.Comments != null)
                 {
-                    <tr>
-                        <td>@item.Id</td>
-                        <td>@Html.ActionLink(item.Body, "Details", "Comment", new { id = item.Id })</td>
-                    </tr>
+                    foreach (var item in Model.Comments)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@Html.ActionLink(item.Body, "Details", "Comment", new {id = item.Id})</td>
+                        </tr>
+                    }
                 }
-            </tbody>
-        </table>
-    }
-    <a asp-area="" asp-controller="Query" asp-action="Index">Go back to Queries</a>
+                </tbody>
+            </table>
+        }
+        <a asp-area="" asp-controller="Query" asp-action="Index">Go back to Queries</a>
+    </div>
 </div>

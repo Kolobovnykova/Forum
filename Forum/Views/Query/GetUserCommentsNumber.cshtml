@@ -4,43 +4,47 @@
     ViewData["Title"] = "Get User Comments Number";
 }
 
-<h2>User comments number under every post</h2>
-
-<div class="row">
-    <div class="col-md-4">
-        <form asp-controller="Query" asp-action="GetUserCommentsNumber" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label">Enter user Id for search:</label>
-                <input asp-for="Id" class="form-control"/>
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-default"/>
-            </div>
-        </form>
+<div class="container">
+    <h2>User comments number under every post</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-controller="Query" asp-action="GetUserCommentsNumber" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label">Enter user Id for search:</label>
+                    <input asp-for="Id" class="form-control"/>
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Submit" class="btn btn-default"/>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-<div>
-    @if (Model != null)
-    {
-        <table border="2" class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col">Post content</th>
-                <th scope="col">Number of Comments</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model.Model)
-            {
+    <div>
+        @if (Model != null)
+        {
+            <table border="2" class="table table-striped">
+                <thead>
                 <tr>
-                    <td>@Html.ActionLink(item.Item1.Title, "Details", "Post", new {id = item.Item1.Id})</td>
-                    <td>@item.Item2</td>
+                    <th scope="col">Post content</th>
+                    <th scope="col">Number of Comments</th>
                 </tr>
-            }
-            </tbody>
-        </table>
-    }
-    <a asp-area="" asp-controller="Query" asp-action="Index">Go back to Queries</a>
+                </thead>
+                <tbody>
+                @if (Model.Model != null)
+                {
+                    foreach (var item in Model.Model)
+                    {
+                        <tr>
+                            <td>@Html.ActionLink(item.Item1.Title, "Details", "Post", new {id = item.Item1.Id})</td>
+                            <td>@item.Item2</td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        }
+        <a asp-area="" asp-controller="Query" asp-action="Index">Go back to Queries</a>
+    </div>
 </div>
