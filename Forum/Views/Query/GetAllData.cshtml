@@ -1,0 +1,72 @@
+﻿@model List<Forum.Models.User>
+@{
+    ViewData["Title"] = "GetAllData";
+}
+
+<div class="container">
+    <h3>All Users</h3>
+    <a asp-area="" asp-controller="Query" asp-action="Index">Go back to Queries</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>User</th>
+            <th>Posts</th>
+            <th>Todos</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(user.Name, "Details", "User", new {id = user.Id})<br/>
+                    <img src="@user.Avatar"/>
+                </td>
+                <td>
+                    <ul style="list-style-type: none">
+                        @if (user.Posts.Count == 0)
+                        {
+                            <li>This user has no posts</li>
+                        }
+                        else
+                        {
+                            foreach (var post in user.Posts)
+                            {
+                                <li>@Html.ActionLink(post.Title, "Details", "Post", new {id = post.Id})</li>
+                                if (post.Comments.Count != 0)
+                                {
+                                    <a class="btn btn-info btn-xs" data-toggle="collapse" href="#@post.Id">Show comments</a>
+                                    <div id="@post.Id" class="collapse">
+
+                                        @foreach (var comment in post.Comments)
+                                        {
+                                            @comment.Body<br/>
+                                        }
+
+                                    </div>
+                                }
+                            }
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <ul style="list-style-type: none">
+                        @if (user.Todos.Count == 0)
+                        {
+                            <li>This user has no todos</li>
+                        }
+                        else
+                        {
+                            foreach (var todo in user.Todos)
+                            {
+                                <li>@Html.ActionLink(todo.Name, "Details", "Todo", new {id = todo.Id})</li>
+                            }
+                        }
+                    </ul>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
